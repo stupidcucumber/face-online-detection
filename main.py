@@ -1,8 +1,15 @@
 import cv2
+from typing import Any
 from ultralytics import YOLO
-from ultralytics.engine.results import Results
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
+
+
+def parse_video_capture_address(arg: Any) -> int | str:
+    _result = str(arg)
+    if _result.isnumeric():
+        return int(_result)
+    return _result
 
 
 def parse_arguments() -> Namespace:
@@ -12,26 +19,25 @@ def parse_arguments() -> Namespace:
         "--weights", type=Path, required=True, help="Path to the YOLO weights."
     )
     
+    parser.add_argument(
+        "--video-capture-address", type=parse_video_capture_address, default=0, help="Address of the camera/video to capture from." 
+    )
+    
     return parser.parse_args()
 
 
 
-def main(weights: Path) -> None:
+def main(weights: Path, video_capture_address: str | int) -> None:
 
     model = YOLO(weights)
     
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(video_capture_address)
     
     while cap.isOpened():
         captured, frame = cap.read()
         
         if captured:
-            result: list[Results] = model(frame, show=True)
-            
-            cv2.imshow("Online tracking", result[0].orig_img)
-            
-        if cv2.waitKey(1) == ord("q"):
-            break
+            model(frame, show=True)
 
 
 if __name__ == "__main__":

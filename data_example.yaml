@@ -1,0 +1,5 @@
+names:
+  0: face
+
+train: /path/to/train/images/directory
+val: /path/to/validation/images/directory

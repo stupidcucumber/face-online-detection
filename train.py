@@ -95,6 +95,11 @@ def main(root: Path, b: int, e: int, device) -> None:
         val_dataloader,
         device=torch.device(device)
     )
+    
+    torch.save(
+        model.state_dict(),
+        f"faster-rcnn_{b}_{e}.pt"
+    )
 
 
 if __name__ == "__main__":

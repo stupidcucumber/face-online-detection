@@ -35,7 +35,7 @@ class FaceDetectionDataset(Dataset):
             
             values = line.strip().split(" ")
             
-            label = int(values[0])
+            label = int(values[0]) + 1
             
             center_x_norm, center_y_norm, width_norm, height_norm = [float(value) for value in values[1:]]
             
@@ -65,7 +65,7 @@ class FaceDetectionDataset(Dataset):
             "labels": labels,
             "area": (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0]),
             "iscrowd": iscrowd,
-            "image_id": torch.tensor([image_id])
+            "image_id": image_id
         }
         
         return result

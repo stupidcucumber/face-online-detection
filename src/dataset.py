@@ -22,7 +22,7 @@ class FaceDetectionDataset(Dataset):
         img = cv2.imread(path)
         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32)
         img_res = cv2.resize(img_rgb, (self.width, self.height), cv2.INTER_AREA) / 255.0
-        return torch.as_tensor(img_res, dtype=torch.float32).transpose(2, 0, 1)
+        return torch.as_tensor(img_res, dtype=torch.float32).permute(2, 0, 1)
     
     def _read_label(self, image: Path, path: Path, image_id: int) -> dict:
         
@@ -57,7 +57,7 @@ class FaceDetectionDataset(Dataset):
             classes.append(label)
             
         boxes = torch.as_tensor(bboxes, dtype=torch.float32)
-        labels = torch.as_tensor(classes, dtype=torch.float32)
+        labels = torch.as_tensor(classes, dtype=torch.int64)
         iscrowd = torch.zeros((boxes.shape[0],), dtype=torch.int64)
             
         result = {

@@ -5,3 +5,4 @@ torch
 sgmllib3k
 torchvision
 pycocotools
+transforms

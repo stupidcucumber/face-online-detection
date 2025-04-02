@@ -32,8 +32,8 @@ def parse_arguments() -> argparse.Namespace:
 
 def main(root: Path, b: int, e: int, device) -> None:
     
-    IMAGE_WIDTH = 512
-    IMAGE_HEIGH = 512
+    IMAGE_WIDTH = 224
+    IMAGE_HEIGH = 224
 
     train_dataset = FaceDetectionDataset(
         root=root,

@@ -59,11 +59,12 @@ def main(root: Path, b: int, e: int, device) -> None:
     
     val_dataloader = DataLoader(
         val_dataset,
-        batch_sampler=b,
+        batch_size=b,
         shuffle=False,
         num_workers=4,
         collate_fn=collate_fn
     )
+
     model = get_object_detection_model(2)
 
     model.to(device)
